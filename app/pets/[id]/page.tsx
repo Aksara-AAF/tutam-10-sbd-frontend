@@ -110,7 +110,7 @@ export default function PetDetailPage() {
                   : 'bg-gray-300 text-gray-500 cursor-not-allowed'
               }`}
             >
-              {pet.status === 'Tersedia' ? 'Ajukan Adopsi Sekarang 🏡' : 'Sedang Diproses'}
+              {pet.status === 'Tersedia' ? 'Ajukan Adopsi Sekarang 🏡' : pet.status === 'Sudah Diadopsi' ? 'Sudah Diadopsi' : 'Sedang Diproses'}
             </button>
           )}
         </div>
