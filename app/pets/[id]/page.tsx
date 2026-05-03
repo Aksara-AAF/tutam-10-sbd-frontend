@@ -9,8 +9,14 @@ export default function PetDetailPage() {
   const router = useRouter();
   const [pet, setPet] = useState<any>(null);
   const [loading, setLoading] = useState(true);
+  const [currentUserId, setCurrentUserId] = useState<number | null>(null);
 
   useEffect(() => {
+    const userStr = localStorage.getItem('user');
+    if (userStr) {
+      const userObj = JSON.parse(userStr);
+      setCurrentUserId(userObj.id);
+    }
     const fetchPetDetail = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/pets/${params.id}`);
@@ -32,7 +38,7 @@ export default function PetDetailPage() {
       router.push('/login');
       return;
     }
-    
+
     try {
       await axios.post(`${process.env.NEXT_PUBLIC_API_URL}/requests`, { pet_id: params.id }, {
         headers: { Authorization: `Bearer ${token}` }
@@ -46,7 +52,7 @@ export default function PetDetailPage() {
   };
 
   if (loading) return <div className="text-center mt-32 text-orange-500 font-bold text-xl animate-pulse">Mengendus jejak... 🐾</div>;
-  
+
   if (!pet) return (
     <div className="text-center py-32">
       <h1 className="text-4xl mb-4">😿</h1>
@@ -57,18 +63,15 @@ export default function PetDetailPage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      {/* Tombol Kembali */}
       <Link href="/pets" className="inline-flex items-center text-gray-500 hover:text-orange-500 font-semibold mb-6 transition-colors">
         <span className="mr-2">←</span> Kembali ke Katalog
       </Link>
 
       <div className="bg-white rounded-3xl shadow-sm border border-orange-100 overflow-hidden flex flex-col md:flex-row">
-        {/* Bagian Kiri: Gambar */}
         <div className="md:w-1/2 h-80 md:h-auto bg-gray-200">
           <img src={pet.image_url || pet.image} alt={pet.name} className="w-full h-full object-cover" />
         </div>
 
-        {/* Bagian Kanan: Detail Informasi */}
         <div className="md:w-1/2 p-8 md:p-12 flex flex-col justify-between">
           <div>
             <div className="flex justify-between items-start mb-4">
@@ -77,7 +80,7 @@ export default function PetDetailPage() {
                 {pet.status}
               </span>
             </div>
-            
+
             <div className="space-y-4 mb-8 text-gray-600">
               <p className="flex items-center gap-2"><span className="text-xl">🐾</span> <strong>Spesies:</strong> {pet.species}</p>
               <p className="flex items-center gap-2"><span className="text-xl">🎂</span> <strong>Umur:</strong> {pet.age}</p>
@@ -93,18 +96,23 @@ export default function PetDetailPage() {
             </div>
           </div>
 
-          {/* Tombol Aksi */}
-          <button 
-            onClick={handleAdopt}
-            disabled={pet.status !== 'Tersedia'}
-            className={`w-full font-bold py-4 rounded-xl shadow-md transition-all ${
-              pet.status === 'Tersedia' 
-              ? 'bg-orange-500 hover:bg-orange-600 text-white active:scale-95' 
-              : 'bg-gray-300 text-gray-500 cursor-not-allowed'
-            }`}
-          >
-            {pet.status === 'Tersedia' ? 'Ajukan Adopsi Sekarang 🏡' : 'Sedang Diproses'}
-          </button>
+          {currentUserId === pet.uploader_id ? (
+            <button disabled className="w-full font-bold py-4 rounded-xl shadow-md bg-gray-200 text-gray-500 cursor-not-allowed">
+              Ini adalah hewan milik Anda 🐾
+            </button>
+          ) : (
+            <button
+              onClick={handleAdopt}
+              disabled={pet.status !== 'Tersedia'}
+              className={`w-full font-bold py-4 rounded-xl shadow-md transition-all ${
+                pet.status === 'Tersedia'
+                  ? 'bg-orange-500 hover:bg-orange-600 text-white active:scale-95'
+                  : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              }`}
+            >
+              {pet.status === 'Tersedia' ? 'Ajukan Adopsi Sekarang 🏡' : 'Sedang Diproses'}
+            </button>
+          )}
         </div>
       </div>
     </div>

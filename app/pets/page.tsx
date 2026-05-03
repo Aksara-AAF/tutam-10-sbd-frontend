@@ -6,8 +6,7 @@ import axios from 'axios';
 export default function PetsCatalog() {
   const [pets, setPets] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
-  
-  // State baru untuk menyimpan filter yang sedang aktif
+
   const [activeFilter, setActiveFilter] = useState('Semua');
 
   useEffect(() => {
@@ -24,12 +23,10 @@ export default function PetsCatalog() {
     fetchPets();
   }, []);
 
-  // Logika Filter: Jika "Semua" tampilkan original, jika tidak, saring berdasarkan spesies
-  const filteredPets = activeFilter === 'Semua' 
-    ? pets 
+  const filteredPets = activeFilter === 'Semua'
+    ? pets
     : pets.filter(pet => pet.species === activeFilter);
 
-  // Daftar kategori untuk tombol filter
   const categories = ['Semua', 'Kucing', 'Anjing', 'Lainnya'];
 
   if (loading) return <div className="text-center mt-20 text-orange-500 font-bold text-xl animate-pulse">Menunggu Mochi... 🐾</div>;
@@ -40,7 +37,6 @@ export default function PetsCatalog() {
         <h2 className="text-3xl font-extrabold text-gray-800 border-b-2 border-orange-200 pb-4 inline-block">Teman yang Tersedia</h2>
       </div>
 
-      {/* --- UI Tombol Filter --- */}
       <div className="flex flex-wrap justify-center gap-3 mb-10">
         {categories.map((category) => (
           <button
@@ -48,8 +44,8 @@ export default function PetsCatalog() {
             onClick={() => setActiveFilter(category)}
             className={`px-6 py-2 rounded-full font-bold text-sm transition-all duration-200 ${
               activeFilter === category
-                ? 'bg-orange-500 text-white shadow-md transform scale-105' // Style saat aktif
-                : 'bg-white text-orange-500 border-2 border-orange-100 hover:border-orange-500 hover:bg-orange-50' // Style saat tidak aktif
+                ? 'bg-orange-500 text-white shadow-md transform scale-105'
+                : 'bg-white text-orange-500 border-2 border-orange-100 hover:border-orange-500 hover:bg-orange-50'
             }`}
           >
             {category}
@@ -57,7 +53,6 @@ export default function PetsCatalog() {
         ))}
       </div>
 
-      {/* --- UI Grid Hewan (Menggunakan filteredPets, bukan pets) --- */}
       {filteredPets.length === 0 ? (
         <div className="text-center py-20 bg-white rounded-3xl border border-gray-100 shadow-sm">
           <div className="text-6xl mb-4">😿</div>

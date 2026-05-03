@@ -12,10 +12,8 @@ export default function CreatePetPage() {
   
   const router = useRouter();
   
-  // State untuk mencegah form muncul sekejap sebelum diredirect
   const [isAuthorized, setIsAuthorized] = useState(false);
 
-  // === PROTEKSI HALAMAN ===
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -41,7 +39,6 @@ export default function CreatePetPage() {
     }
   };
 
-  // Tampilkan layar kosong/loading saat sistem sedang mengecek token
   if (!isAuthorized) return <div className="text-center mt-32 text-orange-500 font-bold text-xl animate-pulse">Memeriksa akses... 🐾</div>;
 
   return (

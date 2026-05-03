@@ -22,7 +22,6 @@ export default function Navbar() {
     <nav className="bg-[#fdfbf7] border-b-2 border-orange-100 sticky top-0 z-50">
       <div className="max-w-7xl mx-auto px-4 flex items-center justify-between h-20">
         
-        {/* KELOMPOK KIRI: Logo & Menu Utama */}
         <div className="flex items-center gap-10">
           <Link href="/" className="flex items-center gap-3">
             <div className="w-12 h-12 bg-orange-200 rounded-full flex items-center justify-center text-2xl shadow-sm border border-orange-300">
@@ -31,7 +30,6 @@ export default function Navbar() {
             <span className="text-2xl font-extrabold text-orange-500 tracking-tight">Adopt<span className="text-gray-800">Pet</span></span>
           </Link>
 
-          {/* Menu Navigasi (Disembunyikan di layar HP, muncul di layar besar) */}
           <ul className="hidden md:flex space-x-8 font-semibold text-gray-500">
             <li>
               <Link href="/" className="hover:text-orange-500 transition-colors duration-200">Beranda</Link>
@@ -42,7 +40,6 @@ export default function Navbar() {
           </ul>
         </div>
 
-        {/* KELOMPOK KANAN: Auth & Profil */}
         <div className="flex items-center gap-3">
           {isLoggedIn ? (
             <>
@@ -58,12 +55,10 @@ export default function Navbar() {
             </>
           ) : (
             <>
-              {/* Tombol Log In diubah menjadi gaya Outline */}
               <Link href="/login" className="px-6 py-2.5 text-orange-500 font-bold border-2 border-orange-500 rounded-full hover:bg-orange-50 hover:shadow-sm active:scale-95 transition-all duration-200">
                 Log In
               </Link>
               
-              {/* Tombol Daftar tetap Solid */}
               <Link href="/register" className="px-6 py-2.5 bg-orange-500 text-white font-bold rounded-full hover:bg-orange-600 shadow-md hover:shadow-lg active:scale-95 transition-all duration-200">
                 Daftar
               </Link>

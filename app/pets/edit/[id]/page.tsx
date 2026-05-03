@@ -9,13 +9,12 @@ export default function EditPetPage() {
   const [age, setAge] = useState('');
   const [health, setHealth] = useState('');
   const [image, setImage] = useState('');
-  const [status, setStatus] = useState('Tersedia'); // Tambahan fitur edit status
+  const [status, setStatus] = useState('Tersedia');
   
   const router = useRouter();
   const params = useParams();
   const [isAuthorized, setIsAuthorized] = useState(false);
 
-  // Proteksi dan Pengambilan Data Awal
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (!token) {
@@ -25,7 +24,6 @@ export default function EditPetPage() {
     }
     setIsAuthorized(true);
 
-    // Simulasi Fetch Data Hewan yang mau di-edit berdasarkan ID
     const fetchPetData = async () => {
       try {
         const response = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/pets/${params.id}`);

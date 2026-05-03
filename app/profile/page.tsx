@@ -7,7 +7,7 @@ import axios from 'axios';
 export default function ProfilePage() {
   const router = useRouter();
   const [user, setUser] = useState<any>({ name: '', email: '' });
-  const [activeTab, setActiveTab] = useState('posts'); // 'posts' atau 'requests'
+  const [activeTab, setActiveTab] = useState('posts'); 
 
   const [myPets, setMyPets] = useState<any[]>([]);
   const [incomingRequests, setIncomingRequests] = useState<any[]>([]);
@@ -21,7 +21,6 @@ export default function ProfilePage() {
       return;
     }
     
-    // Ambil data user dari local storage
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
     if (userData && userData.name) {
       setUser(userData);
@@ -83,7 +82,6 @@ export default function ProfilePage() {
 
   return (
     <div className="max-w-5xl mx-auto px-4 py-8">
-      {/* Kartu Info User */}
       <div className="bg-white rounded-3xl p-8 shadow-sm border border-orange-100 mb-8 flex items-center gap-6">
         <div className="w-20 h-20 bg-orange-100 text-orange-500 rounded-full flex items-center justify-center text-3xl font-bold">
           {user.name.charAt(0)}
@@ -94,7 +92,6 @@ export default function ProfilePage() {
         </div>
       </div>
 
-      {/* Navigasi Tab */}
       <div className="flex border-b-2 border-gray-100 mb-6">
         <button 
           onClick={() => setActiveTab('posts')}
@@ -110,10 +107,8 @@ export default function ProfilePage() {
         </button>
       </div>
 
-      {/* ================= TAB 1: POSTINGAN SAYA ================= */}
       {activeTab === 'posts' && (
         <div className="space-y-8">
-          {/* Sub-bagian 1: Permintaan Masuk (Dari orang yang mau adopsi) */}
           <div className="bg-orange-50 rounded-2xl p-6 border border-orange-200">
             <h3 className="text-xl font-bold text-orange-800 mb-4 flex items-center gap-2"><span>🔔</span> Permintaan Adopsi Masuk</h3>
             {incomingRequests.filter(req => req.status === 'Menunggu').length === 0 ? (
@@ -139,7 +134,6 @@ export default function ProfilePage() {
             )}
           </div>
 
-          {/* Sub-bagian 2: Daftar Hewan yang diposting */}
           <div>
             <h3 className="text-xl font-bold text-gray-800 mb-4">Daftar Hewan Saya</h3>
             <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
@@ -183,7 +177,6 @@ export default function ProfilePage() {
         </div>
       )}
 
-      {/* ================= TAB 2: PENGAJUAN SAYA ================= */}
       {activeTab === 'requests' && (
         <div>
           <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">

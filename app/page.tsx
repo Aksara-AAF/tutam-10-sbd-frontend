@@ -4,7 +4,6 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <div className="max-w-7xl mx-auto px-4">
-      {/* Hero Section */}
       <div className="bg-orange-100 rounded-3xl p-10 md:p-20 text-center shadow-sm border border-orange-200 mt-6 flex flex-col items-center">
         <div className="text-6xl mb-6">🐾</div>
         <h1 className="text-4xl md:text-6xl font-extrabold text-gray-800 mb-6">
